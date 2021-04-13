@@ -1,11 +1,12 @@
-package ie.moguntia.webcrawler;
-import ie.moguntia.threads.*;
+package os.project.webcrawler;
 import java.net.*;
 
-public class WSDLCrawler implements MessageReceiver {
-	public WSDLCrawler(Queue q, int maxLevel, int maxThreads)
+import os.project.threads.*;
+
+public class PSucker implements MessageReceiver {
+	public PSucker(Queue q, int maxLevel, int maxThreads)
 		throws InstantiationException, IllegalAccessException {
-		ThreadController tc = new ThreadController(WSDLCrawlerThread.class,
+		ThreadController tc = new ThreadController(PSuckerThread.class,
 												   maxThreads,
 												   maxLevel,
 												   q,
@@ -29,9 +30,13 @@ public class WSDLCrawler implements MessageReceiver {
 	public static void main(String[] args) {
 		try {
 			int maxLevel = 2;
-			int maxThreads = 5;
-			if (args.length == 4) {
-				maxThreads = Integer.parseInt(args[3]);
+			int maxThreads = 10;
+			int maxDoc = -1;
+			if (args.length == 5) {
+				maxThreads = Integer.parseInt(args[4]);
+			}
+			if (args.length >= 4) {
+				maxDoc = Integer.parseInt(args[3]);
 			}
 			if (args.length >= 3) {
 				maxLevel = Integer.parseInt(args[2]);
@@ -39,8 +44,9 @@ public class WSDLCrawler implements MessageReceiver {
 			if (args.length >= 2) {
 				URLQueue q = new URLQueue();
 				q.setFilenamePrefix(args[1]);
+				q.setMaxElements(maxDoc);
 				q.push(new URL(args[0]), 0);
-				new WSDLCrawler(q, maxLevel, maxThreads);
+				new PSucker(q, maxLevel, maxThreads);
 				return;
 			}
 		} catch (Exception e) {
@@ -48,7 +54,8 @@ public class WSDLCrawler implements MessageReceiver {
 			e.printStackTrace();
 			// System.err.println(e.toString());
 		}
-		System.err.println("Usage: java WSDLCrawler <url> <filenamePrefix> [<maxLevel> [<maxThreads>]]");
-		System.err.println("Crawls the web for WSDL descriptions.");
+		System.err.println("Usage: java PSucker <url> <filenamePrefix> [<maxLevel> [<maxDoc> [<maxThreads>]]]");
+		System.err.println("Crawls the web for jpeg pictures and mpeg, avi or wmv movies.");
+		System.err.println("-1 for either maxLevel or maxDoc means 'unlimited'.");
 	}
 }

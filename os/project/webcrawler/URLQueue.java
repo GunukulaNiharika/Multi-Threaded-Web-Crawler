@@ -1,4 +1,4 @@
-package ie.moguntia.webcrawler;
+package os.project.webcrawler;
 
 import java.net.*;
 import java.util.*;
@@ -55,7 +55,7 @@ import java.util.*;
  * 
  */
 
-public class URLQueue implements ie.moguntia.threads.Queue {
+public class URLQueue implements os.project.threads.Queue {
 
 	LinkedList evenQueue;
 	LinkedList oddQueue;

@@ -1,4 +1,4 @@
-package ie.moguntia.threads;
+package os.project.threads;
 
 /**
  * Abstract class that denotes a thread that can cooperate with a

@@ -1,4 +1,4 @@
-package ie.moguntia.threads;
+package os.project.threads;
 
 /**
  * Simple interface that allows a thread to tell another class what it is
